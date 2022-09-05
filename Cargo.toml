@@ -13,7 +13,7 @@ exclude = [
 ]
 
 [dependencies]
-clamav-sys = "0.0.5"
+clamav-sys = { git = "https://github.com/urbanlogiq/clamav-sys", branch="bindgen-0.58" }
 bitflags = "1.2.1"
 libc = "0.2"
 
