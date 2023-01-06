@@ -8,19 +8,19 @@ use clamav_sys::cl_error_t;
 /// An error indicating a clam failure.
 #[derive(Clone, PartialEq, Eq)]
 pub struct ClamError {
-    code: i32,
+    code: cl_error_t,
 }
 
 impl ClamError {
     pub fn new(native_err: cl_error_t) -> Self {
         ClamError {
-            code: native_err as i32,
+            code: native_err,
         }
     }
 
     pub fn string_error(&self) -> String {
         unsafe {
-            let ptr = clamav_sys::cl_strerror(self.code);
+            let ptr = clamav_sys::cl_strerror(self.code as cl_error_t);
             let bytes = CStr::from_ptr(ptr).to_bytes();
             str::from_utf8(bytes)
                 .ok()
@@ -29,14 +29,14 @@ impl ClamError {
         }
     }
 
-    pub fn code(&self) -> i32 {
+    pub fn code(&self) -> cl_error_t {
         self.code
     }
 }
 
 impl fmt::Display for ClamError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "cl_error {}: {}", self.code, self.string_error())
+        write!(f, "cl_error {:?}: {}", self.code, self.string_error())
     }
 }
 
