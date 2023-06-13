@@ -86,7 +86,7 @@ extern fn cl_pread(handle: *mut os::raw::c_void, buf: *mut os::raw::c_void, coun
 }
 
 #[cfg(unix)]
-extern fn cl_pread(handle: *mut os::raw::c_void, buf: *mut os::raw::c_void, count: os::raw::c_ulonglong, offset: os::raw::c_long) -> os::raw::c_long {
+extern fn cl_pread(handle: *mut os::raw::c_void, buf: *mut os::raw::c_void, count: usize, offset: os::raw::c_long) -> os::raw::c_long {
     use std::convert::TryInto;
     unsafe {
         libc::pread(handle as i32, buf, count.try_into().unwrap(), offset).try_into().unwrap()
@@ -98,7 +98,7 @@ pub struct Fmap(*mut cl_fmap_t);
 
 impl Fmap {
     pub fn new_from_memory(start: *const u8, len: u64) -> Result< Fmap > {
-        let map = unsafe { cl_fmap_open_memory(start as *const os::raw::c_void, len) };
+        let map = unsafe { cl_fmap_open_memory(start as *const os::raw::c_void, len as usize) };
         if map.is_null() {
             Err(MapError::new())
         }
@@ -108,7 +108,7 @@ impl Fmap {
     }
 
     pub fn new_from_handle(handle: RawOsHandle, offset: u64, len: u64, use_ageing: bool) -> Result< Fmap > {
-        let map = unsafe { cl_fmap_open_handle(handle as *mut os::raw::c_void, offset, len, Some(cl_pread), use_ageing.into() ) };
+        let map = unsafe { cl_fmap_open_handle(handle as *mut os::raw::c_void, offset as usize, len as usize, Some(cl_pread), use_ageing.into() ) };
         if map.is_null() {
             Err(MapError::new())
         }
