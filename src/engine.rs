@@ -481,6 +481,7 @@ fn get_field_type(field: cl_engine_field) -> EngineValueType {
         cl_engine_field::CL_ENGINE_PCRE_MAX_FILESIZE => EngineValueType::U64,
         cl_engine_field::CL_ENGINE_DISABLE_PE_CERTS => EngineValueType::U32,
         cl_engine_field::CL_ENGINE_PE_DUMPCERTS => EngineValueType::U32,
+        cl_engine_field::CL_ENGINE_CACHE_SIZE => EngineValueType::U32,
     }
 }
 
