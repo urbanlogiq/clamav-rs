@@ -483,7 +483,7 @@ fn get_field_type(field: cl_engine_field) -> EngineValueType {
         cl_engine_field::CL_ENGINE_PE_DUMPCERTS => EngineValueType::U32,
         cl_engine_field::CL_ENGINE_CACHE_SIZE => EngineValueType::U32,
         cl_engine_field::CL_ENGINE_CVDCERTSDIR => EngineValueType::String,
-        cl_engine_field::CL_ENGINE_TMPDIR_RECURSION => EngineValueType::U32,
+        cl_engine_field::CL_ENGINE_TMPDIR_RECURSION => EngineValueType::String,
         cl_engine_field::CL_ENGINE_FIPS_LIMITS => EngineValueType::U32,
     }
 }
